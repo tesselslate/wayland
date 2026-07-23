@@ -133,15 +133,6 @@ pub fn build(b: *std.Build) void {
             }
         }
         wayland_private.root_module.linkSystemLibrary("rt", .{});
-        if (link_system_ffi) {
-            wayland_private.root_module.linkSystemLibrary("ffi", .{});
-        } else if (b.lazyDependency("libffi", .{
-            .target = target,
-            .optimize = optimize,
-            .linkage = linkage,
-        })) |libffi| {
-            wayland_private.root_module.linkLibrary(libffi.artifact("ffi"));
-        }
 
         break :blk wayland_private;
     };
